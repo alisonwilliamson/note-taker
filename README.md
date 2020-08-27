@@ -24,5 +24,5 @@ Application allows users to delete previously saved notes.
 
 ## Deploying the App
 
-Here is a link to the deployed app through Heroku:
+Here is a link to the deployed app through Heroku: https://tranquil-badlands-37293.herokuapp.com/
 
