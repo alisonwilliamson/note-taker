@@ -26,3 +26,7 @@ Application allows users to delete previously saved notes.
 
 Here is a link to the deployed app through Heroku: https://tranquil-badlands-37293.herokuapp.com/
 
+![Screenshot (41)](https://user-images.githubusercontent.com/54878075/91409235-291cd700-e813-11ea-95ce-5ed4a37aeb80.png)
+![Screenshot (42)](https://user-images.githubusercontent.com/54878075/91409237-29b56d80-e813-11ea-9ae1-3a7d9534ca4b.png)
+![Screenshot (43)](https://user-images.githubusercontent.com/54878075/91409239-29b56d80-e813-11ea-87cf-731a8b918977.png)
+![Screenshot (44)](https://user-images.githubusercontent.com/54878075/91409240-2a4e0400-e813-11ea-96c3-5729856307c3.png)
