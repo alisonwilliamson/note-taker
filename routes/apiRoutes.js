@@ -1,47 +1,45 @@
-import { writeFile } from 'fs';
-import { join } from "path";
-const filePath = join(__dirname, "../db/db.json");
-import data, { push, indexOf, splice } from "../db/db.json";
-// used to give each note a unique id
-import { generate } from 'shortid';
+const fs = require("fs");
+const path = require("path");
+const filePath = path.join(__dirname, "../db/db.json");
+const db = require("../db/db.json");
+const shortid = require("shortid");
 
-export default function(app) {
+module.exports = function(app) {
 
-// displays notes
+// displays all notes
 app.get("/api/notes", function(req, res) {
-    return res.json(data);
+    return res.json(db);
 });
 
-//creates a new note
+// creates a new note
 app.post("/api/notes", function(req, res) {
-
     const newNote = req.body;
     // gives note specific id
-    newNote.id = generate();
-    // pushes note data onto array
-    push(newNote);
-    writeFile(filePath, JSON.stringify(data), err => {
+    newNote.id = shortid.generate();
+    // pushes new note data onto array
+    db.push(newNote);
+    fs.writeFile(filePath, JSON.stringify(db), err => {
         if (err) throw err;
         console.log("Note added");
         });
         // display in JSON
         res.send(newNote);
-  });
+});
 
 // deletes a note
 app.delete("/api/notes/:id", function(req, res) {
   const id = req.params.id;
-  for (let note of data) {
+  for (let note of db) {
       if (id === note.id) {
-        const noteIndex = indexOf(note);
-        splice(noteIndex, 1);
-        writeFile(filePath, JSON.stringify(data), err => {
-            if (err) throw err;
-            console.log('Note deleted');
-        });
-        res.end()
+          const noteIndex = db.indexOf(note);
+          db.splice(noteIndex, 1);
+          fs.writeFile(filePath, JSON.stringify(db), err => {
+              if (err) throw err;
+              console.log("Note deleted");
+          });
+          res.end()
       }
-    }
+  }
 });
 
 // displays a note
@@ -54,5 +52,4 @@ app.get("/api/notes/:note", function(req, res) {
     }
     return res.json(false);
   });
-} 
- 
+};
