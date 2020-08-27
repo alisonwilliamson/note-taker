@@ -1,27 +1,30 @@
-var data = require("../db/db.json");
+const fs = require('fs');
+const path = require("path");
+const filePath = path.join(__dirname, "../db/db.json");
+const data = require("../db/db.json");
+// used to give each note a unique id
+const shortid = require('shortid');
 
-module.exports = function (app) {
+module.exports = function(app) {
 
-    app.get("/api/notes", function (req, res) {
-        res.json(data);
-    });
+// displays notes
+app.get("/api/notes", function(req, res) {
+    return res.json(data);
+});
 
-    app.get("/api/notes/:note", function (req, res) {
-        var chosen = req.params.note;
-        data(chosen)
-        res.json(true);
-    });
+//creates a new note
+app.post("/api/notes", function(req, res) {
 
-    // creates a note
-    app.post("/api/notes", function (req, res) {
-        data.push(req.body);
-        res.json(true);
-    });
-
-    // deletes a note
-    app.delete("/api/notes/:note", function (req, res) {
-        var chosen = req.params.note;
-        data.pop(chosen);
-        res.json(true)
-    })
-  };
+    const newNote = req.body;
+    // gives note specific id
+    newNote.id = shortid.generate();
+    // pushes note data onto array
+    data.push(newNote);
+    fs.writeFile(filePath, JSON.stringify(data), err => {
+        if (err) throw err;
+        console.log("Note added");
+        });
+        // display in JSON
+        res.send(newNote);
+  });
+}
